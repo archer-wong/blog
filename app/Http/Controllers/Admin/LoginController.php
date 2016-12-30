@@ -30,8 +30,7 @@ class LoginController extends CommonController
             }
             //将用户存入session中
             session(['user'=>$user]);
-            dd(session('user'));
-            echo 'ok';
+            return redirect('admin/index');
 
         }else {
             return view('admin.login');
@@ -42,6 +41,12 @@ class LoginController extends CommonController
     {
         $code = new \Code;
         $code->make();
+    }
+
+    public function quit()
+    {
+        session(['user'=>null]);
+        return redirect('admin/login');
     }
     
 }
