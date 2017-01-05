@@ -15,11 +15,14 @@ class Category extends Model
     //时间字段
     public $timestamps=false;
 
+    //保护字段,create方法的需要
+    protected $guarded=[];
+
     
     
     //将数据在这里处理
     public  function tree(){
-        $categorys = $this->all();
+        $categorys = $this->orderBy('cate_order','asc')->get();
         return $this->getTree($categorys,'cate_name','cate_id','cate_pid',0);
     }
     
