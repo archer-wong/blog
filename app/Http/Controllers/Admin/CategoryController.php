@@ -62,21 +62,44 @@ class CategoryController extends CommonController
     }
 
     //delete.admin/category/{category}   删除单个分类
-    public function destroy()
+    public function destroy($cate_id)
     {
+        $re = Category::where('cate_id',$cate_id)->delete();
 
+        //如果父级分类被删除,则子分类的pid变成0,也就是变成顶级分类
+        Category::where('cate_pid',$cate_id)->update(['cate_pid'=>0]);
+        if($re){
+            $data = [
+                'status' => 0,
+                'msg' => '分类删除成功！',
+            ];
+        }else{
+            $data = [
+                'status' => 1,
+                'msg' => '分类删除失败，请稍后重试！',
+            ];
+        }
+        return $data;
     }
 
     //put.admin/category/{category}    更新分类
-    public function update()
+    public function update($cate_id)
     {
-
+        $input = Input::except('_token','_method');
+        $res = Category::where('cate_id',$cate_id)->update($input);
+        if($res){
+            return redirect('admin/category');
+        }else{
+            return back()->with('errors','分类信息更新失败,请稍后重试');
+        }
     }
 
     //get.admin/category/{category}/edit  编辑分类
-    public function edit()
+    public function edit($cate_id)
     {
-
+        $cateItem = Category::find($cate_id);
+        $data = Category::where('cate_pid',0)->get();
+        return view('admin.category.edit',compact('cateItem','data'));
     }
 
     /**
