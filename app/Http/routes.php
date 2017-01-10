@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
@@ -29,9 +28,22 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
     Route::get('quit', 'LoginController@quit');
     Route::any('pass', 'IndexController@pass');
 
-    Route::any('cate/changeorder', 'CategoryController@changeOrder');
-    Route::resource('category','CategoryController');
-    Route::resource('article','ArticleController');
+    Route::post('cate/changeorder', 'CategoryController@changeOrder');
+    Route::resource('category', 'CategoryController');
+
+    Route::resource('article', 'ArticleController');
+
+    Route::post('links/changeorder', 'LinksController@changeOrder');
+    Route::resource('links', 'LinksController');
+
+    Route::post('navs/changeorder', 'NavsController@changeOrder');
+    Route::resource('navs', 'NavsController');
+
+    Route::get('config/putfile', 'ConfigController@putFile');
+    Route::post('config/changecontent', 'ConfigController@changeContent');
+    Route::post('config/changeorder', 'ConfigController@changeOrder');
+    Route::resource('config', 'ConfigController');
 
     Route::any('upload', 'CommonController@upload');
+
 });

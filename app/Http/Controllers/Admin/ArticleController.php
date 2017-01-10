@@ -15,7 +15,8 @@ class ArticleController extends CommonController
     //get.admin/article  全部文章列表
     public function index()
     {
-        echo '123123123';
+        $data = Article::orderBy('art_id','desc')->paginate(10);
+        return view('admin.article.index',compact('data'));
     }
 
 
@@ -54,6 +55,44 @@ class ArticleController extends CommonController
         }else{
             return back()->withErrors($validator);
         }
+    }
+
+    //get.admin/article/{article}/edit  编辑文章
+    public function edit($art_id)
+    {
+        $data = (new Category)->tree();
+        $field = Article::find($art_id);
+        return view('admin.article.edit',compact('data','field'));
+    }
+
+    //put.admin/article/{article}    更新文章
+    public function update($art_id)
+    {
+        $input = Input::except('_token','_method');
+        $res = Article::where('art_id',$art_id)->update($input);
+        if($res){
+            return redirect('admin/article');
+        }else{
+            return back()->with('errors','文章更新失败，请稍后重试！');
+        }
+    }
+
+    //delete.admin/article/{article}   删除单个文章
+    public function destroy($art_id)
+    {
+        $re = Article::where('art_id',$art_id)->delete();
+        if($re){
+            $data = [
+                'status' => 0,
+                'msg' => '文章删除成功！',
+            ];
+        }else{
+            $data = [
+                'status' => 1,
+                'msg' => '文章删除失败，请稍后重试！',
+            ];
+        }
+        return $data;
     }
 
 
