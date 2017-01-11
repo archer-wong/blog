@@ -91,7 +91,10 @@
         </form>
     </div>
     <script>
+        //载入时候先判断,显示哪块
         showTr();
+
+        //判断显示内容
         function showTr() {
             var type = $('input[name=field_type]:checked').val();
             if(type=='radio'){

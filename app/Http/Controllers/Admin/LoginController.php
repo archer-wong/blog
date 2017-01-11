@@ -30,7 +30,7 @@ class LoginController extends CommonController
             }
             //将用户存入session中
             session(['user'=>$user]);
-            return redirect('admin/index');
+            return redirect('admin');
 
         }else {
             return view('admin.login');

@@ -17,6 +17,7 @@ class ConfigController extends Controller
     {
         $data = Config::orderBy('conf_order','asc')->get();
         foreach ($data as $k=>$v){
+            //不同的类型,组成不同的内容,压进_html字段
             switch ($v->field_type){
                 case 'input':
                     $data[$k]->_html = '<input type="text" class="lg" name="conf_content[]" value="'.$v->conf_content.'">';
@@ -31,6 +32,7 @@ class ConfigController extends Controller
                     foreach($arr as $m=>$n){
                         //1|开启
                         $r = explode('|',$n);
+                        //三元表达式,判断是不是需要选中
                         $c = $v->conf_content==$r[0]?' checked ':'';
                         $str .= '<input type="radio" name="conf_content[]" value="'.$r[0].'"'.$c.'>'.$r[1].'　';
                     }
@@ -42,6 +44,9 @@ class ConfigController extends Controller
         return view('admin.config.index',compact('data'));
     }
 
+    /*
+     * 配置更新
+     */
     public function changeContent()
     {
         $input = Input::all();
@@ -52,6 +57,9 @@ class ConfigController extends Controller
         return back()->with('errors','配置项更新成功！');
     }
 
+    /*
+     * 配置写入config文件夹下的文件web.php中
+     */
     public function putFile()
     {
 
@@ -63,6 +71,9 @@ class ConfigController extends Controller
 
     }
 
+    /*
+     * 改变排序
+     */
     public function changeOrder()
     {
         $input = Input::all();
