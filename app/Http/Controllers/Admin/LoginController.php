@@ -8,7 +8,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 
-require_once 'resources/org/code/Code.class.php';
+require_once 'resources/org/code/Code.php';
 
 class LoginController extends CommonController
 {
