@@ -10,4 +10,5 @@ bootstrap/compiled.php
 app/storage/
 
 uploads/
+.env
 
