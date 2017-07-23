@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Model\Article;
+use App\Http\Model\Links;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,8 +25,11 @@ class CommonController extends Controller
 
         $navs = Navs::all();
 
+        $links = Links::orderBy("link_order","asc")->get();
+
         View::share('navs',$navs);
         View::share('hot',$hot);
         View::share('new',$new);
+        View::share('links',$links);
     }
 }
