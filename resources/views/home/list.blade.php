@@ -5,56 +5,45 @@
     <meta name="description" content="{{$field->cate_description}}" />
 @endsection
 @section('content')
-    <article>
-        <h1 class="t_nav"><span>{{$field->cate_title}}</span><a href="{{url('/')}}" class="n1">网站首页</a>
-            @if($field->pid_data)
-                <a href="{{url('cate/'.$field->pid_data->cate_id)}}" class="n2">{{$field->pid_data->cate_name}}</a>
-                <a href="{{url('cate/'.$field->cate_id)}}" class="n1">{{$field->cate_name}}</a></h1>
-            @else
-                <a href="{{url('cate/'.$field->cate_id)}}" class="n2">{{$field->cate_name}}</a></h1>
-            @endif
-
-        <div class="newblog left">
-            @foreach($data as $d)
-                <h2>{{$d->art_title}}</h2>
-                <p class="dateview"><span>发布时间：{{date('Y-m-d',$d->art_time)}}</span><span>作者：{{$d->art_author}}</span><span>分类：[<a href="{{url('cate/'.$d->cate_id)}}">{{$d->cate_name}}</a>]</span></p>
-                <figure><img src="{{url($d->art_thumb)}}"></figure>
-                <ul class="nlist">
-                    <p>{{$d->art_description}}</p>
-                    <a title="{{$d->art_title}}" href="{{url('a/'.$d->art_id)}}" target="_blank" class="readmore">阅读全文>></a>
-                </ul>
-                <div class="line"></div>
-            @endforeach
-
-            <div class="page">
-                {{$data->links()}}
-            </div>
-        </div>
-        <aside class="right">
-            @if($submenu->all())
-                <div class="rnav">
-                    <ul>
-                        @foreach($submenu as $k=>$s)
-                            <li class="rnav{{($k+1)%4+1}}"><a href="{{url('cate/'.$s->cate_id)}}" >{{$s->cate_name}}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
+<div class="ui fluid container" style="background:white;padding:20px;">
+    <div class="ui big breadcrumb">
+        <span class="section">您当前的位置：</span>
+        <a class="section" href="{{url('/')}}">首页</a>
+        <div class="divider"> / </div>
+        @if($field->pid_data)
+            <a class="section" href="{{url('cate/'.$field->pid_data->cate_id)}}">{{$field->pid_data->cate_name}}</a>
+            <div class="divider"> / </div>
+            <a class="section active" href="{{url('cate/'.$field->cate_id)}}">{{$field->cate_name}}</a></h1>
+        @else
+            <a class="section active" href="{{url('cate/'.$field->cate_id)}}">{{$field->cate_name}}</a></h1>
         @endif
-
+    </div>
+    <div class="share" style="float:right;">
         <!-- Baidu Button BEGIN -->
-            <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_tsina"></a><a class="bds_qzone"></a><a class="bds_tqq"></a><a class="bds_renren"></a><span class="bds_more"></span><a class="shareCount"></a></div>
-            <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script>
-            <script type="text/javascript" id="bdshell_js"></script>
-            <script type="text/javascript">
-                document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-            </script>
-            <!-- Baidu Button END -->
-
-            <div class="news" style="float:left;">
-                @parent
+        <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_tsina"></a><a class="bds_qzone"></a><a class="bds_tqq"></a><a class="bds_renren"></a><span class="bds_more"></span><a class="shareCount"></a></div>
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+            document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+        </script>
+        <!-- Baidu Button END -->
+        <div class="blank"></div>
+        <div class="news">
+            @parent
+        </div>
+    </div>
+    <!--清除浮动，否则下面的div会和上面重叠-->
+    <div style="clear:both"></div>
+        @foreach($data as $d)
+            <div class="ui segment">
+                <div style="float:right"><span>{{date('Y-m-d',$d->art_time)}}</span><span>作者：{{$d->art_editor}}</span></div>
+                <div sytle="float:left"><h3 class="ui header">{{$d->art_title}}</h3></div>
+                <div sytle="float:clear"></div>
+                <p style="margin-top:15px;">{{$d->art_description}}</p>
+                <div sytle="float:left"><a title="{{$d->art_title}}" href="{{url('a/'.$d->art_id)}}" target="_blank">阅读全文>></a></div>
             </div>
-        </aside>
-    </article>
+        @endforeach
+</div>
 @endsection
 
 
