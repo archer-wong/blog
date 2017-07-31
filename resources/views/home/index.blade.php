@@ -22,7 +22,7 @@
     <div class="ui fluid container" style="background:white">
         @foreach($data as $d)
             <div class="ui segment">
-                <div style="float:right"><span>{{date('Y-m-d',$d->art_time)}}</span><span>作者：{{$d->art_editor}}</span></div>
+                <div style="float:right"><span>{{date('Y-m-d',$d->art_time)}}；</span><span>作者：{{$d->art_editor}}</span></div>
                 <div sytle="float:left"><h3 class="ui header">{{$d->art_title}}</h3></div>
                 <div sytle="float:clear"></div>
                 <p style="margin-top:15px;">{{$d->art_description}}</p>

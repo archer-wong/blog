@@ -3,21 +3,51 @@
 <head>
     <meta charset="utf-8">
     @yield('info')
-<!--
-    <link href="{{asset('resources/views/home/css/base.css')}}" rel="stylesheet">
-    <link href="{{asset('resources/views/home/css/index.css')}}" rel="stylesheet">
-    <link href="{{asset('resources/views/home/css/style.css')}}" rel="stylesheet">
-    <link href="{{asset('resources/views/home/css/new.css')}}" rel="stylesheet">
--->
     <link href="{{asset('public/semantic/dist/semantic.min.css')}}" rel="stylesheet">
     <script src="{{asset('public/semantic/dist/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('public/semantic/dist/semantic.js')}}"></script>
     <!--[if lt IE 9]>
     <script src="{{asset('resources/views/home/js/modernizr.js')}}"></script>
     <![endif]-->
+<style>
+    body{
+        overflow:hidden;
+    }
+    .main-container{
+        height:100%;
+    }
+    .left-content{
+        height:100%;
+        background:white;
+    }
+    .right-content{
+        height:100%;
+        background:#EAEAEA;
+        padding:20px;
+        overflow-x:hidden;
+        overflow-y:scroll;
+    }
+    .profile{
+        margin:0 auto;
+    }
+    .profile-text{
+        text-align:center;
+    }
+    .footer{
+        background: grey;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        font-size: 16px;
+        text-align:center;
+        height: 35px;
+        line-height: 35px;
+    }
+</style>
 </head>
-<body style="overflow:-Scroll;overflow-y:hidden">
-    <div class="ui inverted menu">
+<body>
+    <div class="ui inverted menu" style="margin-top:0px;">
         @foreach($navs as $k=>$v)
             <a class="item ui animated fade button" tabindex="0" href="{{$v->nav_url}}">
                 <div class="visible content">{{$v->nav_name}}</div>
@@ -25,15 +55,14 @@
             </a>
         @endforeach
     </div>
-    <div class="ui fluid container" style="height:100%;">
-        <div class="ui grid" style="height:100%;padding-right:15px;">
-            <div class="three wide column" style="height:100%;padding-left:40px;background:white">
+        <div class="ui grid main-container" >
+            <div class="three wide column left-content" >
                 <div class="ui grid container" style="margin-top:50px;">
-                    <div style="margin:0 auto;">
-                        <img class="ui small circular image" src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=69e1a1a4b78f8c54e3d3c22902124ac8/060828381f30e9247e29fb7b4f086e061c95f7ef.jpg">
-                    <h3 class="ui header" style="text-align:center;">
-                        风清扬
-                    </h3>
+                    <div class="profile">
+                        <img class="ui small circular image" src="{{asset('public/images/profile.jpg')}}">
+                        <h3 class="ui header profile-text">
+                            风清扬
+                        </h3>
                     </div>
                 </div>
                 <div class="ui grid container" style="margin-top:150px;">
@@ -72,14 +101,12 @@
                     </div>
                 </div>
             </div>
-            <div class="thirteen wide column" style="height:100%;background:#EAEAEA;padding:20px;overflow-x:hidden;overflow-y:scroll">
+            <div class="thirteen wide column right-content" >
                 @yield('content')
             </div>
-    </div>
-<!--
-<footer>
+        </div>
+<div class="footer">
     <p>{!! Config::get('web.copyright') !!} {!! Config::get('web.web_count') !!}</p>
-</footer>
--->
+</div>
 </body>
 </html>
