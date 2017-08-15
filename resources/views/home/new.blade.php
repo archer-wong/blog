@@ -5,6 +5,52 @@
     <meta name="description" content="{{$field->art_description}}" />
 @endsection
 @section('content')
+<style>
+    /*一级标题*/
+    .art-content h1
+    {
+        margin: 10px 0;
+        font-family: 'Microsoft Yahei';
+        text-align: left;
+        padding: 6px 20px;
+        color: #fff;
+        background: #55895B;
+        font-size: 20px;
+        border-radius: 4px;
+        clear: both;
+    }
+    /*二级标题*/
+    .art-content h2
+    {
+        margin: 10px 0;
+        padding: 6px 20px;
+        font-family: 'Microsoft Yahei';
+        font-size: 18px;
+        background: #C6EFD2;
+        color: #999;
+        border-radius: 4px;
+        clear: both;
+    }
+    /*三级标题*/
+    .art-content h3
+    {
+        margin-left:20px;
+        font-family: 'Microsoft Yahei';
+        font-size: 16px;
+        clear: both;
+    }
+    /*代码块*/
+    pre[class *=php]
+    {
+            margin: 0 20px;
+            background: #EFFFF4;
+            border: solid 0px #939393;
+            font-size: 14px;
+            font-family: Courier New;
+            clear: both;
+            padding: 10px 20px;
+    }
+</style>
 <div class="ui fluid container" style="background:white;padding:20px;">
     <div class="ui big breadcrumb">
         <span class="section">您当前的位置：</span>
@@ -39,7 +85,7 @@
         <div sytle="float:left"><h2 class="ui header">{{$field->art_title}}</h2></div>
         <div sytle="float:clear"></div>
         <div class="ui divider"></div>
-        <div>
+        <div class="art-content">
             {!! $field->art_content !!}
         </div>
         <div class="keybq">
