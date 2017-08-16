@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Model\User;
+use App\Http\Model\AdminUser;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,12 +24,12 @@ class LoginController extends CommonController
                 return back()->with('msg','验证码错误！');
             }
             //验证用户密码是否正确,注意使用了解密方法
-            $user = User::first();
-            if($user->user_name != $input['user_name'] || Crypt::decrypt($user->user_pass)!= $input['user_pass']){
+            $admin_user = AdminUser::first();
+            if($admin_user->user_name != $input['user_name'] || Crypt::decrypt($admin_user->user_pass)!= $input['user_pass']){
                 return back()->with('msg','用户名或者密码错误！');
             }
             //将用户存入session中
-            session(['user'=>$user]);
+            session(['admin_user'=>$admin_user]);
             return redirect('admin');
 
         }else {
@@ -45,7 +45,7 @@ class LoginController extends CommonController
 
     public function quit()
     {
-        session(['user'=>null]);
+        session(['admin_user'=>null]);
         return redirect('admin/login');
     }
 

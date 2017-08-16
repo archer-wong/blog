@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Model\User;
+use App\Http\Model\AdminUser;
 use App\Http\Controllers\Admin\CommonController;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -28,7 +28,7 @@ class IndexController extends CommonController
     public function pass()
     {
         if($input = Input::all()){
-            
+
             //定义验证规则
             $rules = [
                 'password'=>'required|between:6,20|confirmed',
@@ -47,11 +47,11 @@ class IndexController extends CommonController
             $validator = Validator::make($input,$rules,$message);
 
             if($validator->passes()){
-                $user = User::first();
-                $_password = Crypt::decrypt($user->user_pass);
+                $admin_user = AdminUser::first();
+                $_password = Crypt::decrypt($admin_user->user_pass);
                 if($input['password_o']==$_password){
-                    $user->user_pass = Crypt::encrypt($input['password']);
-                    $user->update();
+                    $admin_user->user_pass = Crypt::encrypt($input['password']);
+                    $admin_user->update();
                     return back()->with('errors','修改密码成功！');
                 }else{
                     return back()->with('errors','原密码错误！');
