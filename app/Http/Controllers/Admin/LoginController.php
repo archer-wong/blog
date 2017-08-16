@@ -48,5 +48,5 @@ class LoginController extends CommonController
         session(['user'=>null]);
         return redirect('admin/login');
     }
-    
+
 }
