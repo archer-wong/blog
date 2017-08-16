@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     //表名
-    protected $table="category";
+    protected $table="categories";
 
     //主键
     protected $primaryKey="cate_id";
@@ -18,14 +18,14 @@ class Category extends Model
     //保护字段,create方法的需要
     protected $guarded=[];
 
-    
-    
+
+
     //将数据在这里处理
     public  function tree(){
         $categorys = $this->orderBy('cate_order','asc')->get();
         return $this->getTree($categorys,'cate_name','cate_id','cate_pid',0);
     }
-    
+
     //二级tree分类方法
     public function getTree($data,$field_name,$field_id='id',$field_pid='pid',$pid=0){
         $arr = [];

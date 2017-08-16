@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     //表名
-    protected $table="article";
+    protected $table="articles";
 
     //主键
     protected $primaryKey="art_id";

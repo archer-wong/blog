@@ -48,3 +48,8 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
     Route::any('upload', 'CommonController@upload');
 
 });
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
+});

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Config extends Model
 {
     //表名
-    protected $table="config";
+    protected $table="configs";
 
     //主键
     protected $primaryKey="conf_id";

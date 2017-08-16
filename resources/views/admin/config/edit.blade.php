@@ -53,6 +53,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>内容：</th>
+                    <td>
+                        <textarea id="" cols="30" rows="10" name="conf_content">{{$field->conf_content}}</textarea>
+                    </td>
+                </tr>
+                <tr>
                     <th>类型：</th>
                     <td>
                         <input type="radio" name="field_type" value="input" @if($field->field_type=='input') checked @endif onclick="showTr()">input　

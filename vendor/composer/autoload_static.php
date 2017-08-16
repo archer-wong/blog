@@ -258,9 +258,14 @@ class ComposerStaticInit77f39ccdfe0293fa273c36621fc93ac8
     );
 
     public static $classMap = array (
-        'CreateLinksTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_10_094052_create_links_table.php',
-        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/2014_10_12_100000_create_password_resets_table.php',
-        'CreateUsersTable' => __DIR__ . '/../..' . '/database/2014_10_12_000000_create_users_table.php',
+        'CreateAdminUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_16_144454_create_admin_users_table.php',
+        'CreateArticlesTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_16_144855_create_articles_table.php',
+        'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_16_145007_create_categories_table.php',
+        'CreateConfigsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_16_145051_create_configs_table.php',
+        'CreateLinksTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_16_145119_create_links_table.php',
+        'CreateNavsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_16_145200_create_navs_table.php',
+        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
