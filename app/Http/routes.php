@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
 });
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
-
+});
+Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/home', 'HomeController@index');
 });
