@@ -59,7 +59,7 @@
             <div class="three wide column left-content" >
                 <div class="ui grid container" style="margin-top:50px;">
                     <div class="profile">
-                        <img class="ui small circular image" src="{{asset('public/images/profile.jpg')}}">
+                        <img class="ui small circular image" src="{{asset('public/style/home/images/profile.jpg')}}">
                         <h3 class="ui header profile-text">
                             风清扬
                         </h3>
