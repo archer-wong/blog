@@ -54,59 +54,70 @@
                 <div class="hidden content">{{$v->nav_alias}}</div>
             </a>
         @endforeach
+        @if (Auth::user())
+            <div class="right menu">
+                <a class="item">{{ Auth::user()->name }}</a>
+                <a class="ui item" href="{{url('logout')}}">退出</a>
+            </div>
+        @else
+            <div class="right menu">
+                <a class="ui item" href="{{url('login')}}">登录</a>
+                <a class="ui item" href="{{url('register')}}">注册</a>
+            </div>
+        @endif
     </div>
-        <div class="ui grid main-container" >
-            <div class="three wide column left-content" >
-                <div class="ui grid container" style="margin-top:50px;">
-                    <div class="profile">
-                        <img class="ui small circular image" src="{{asset('public/style/home/images/profile.jpg')}}">
-                        <h3 class="ui header profile-text">
-                            风清扬
-                        </h3>
-                    </div>
-                </div>
-                <div class="ui grid container" style="margin-top:150px;">
-                    <h4 class="ui horizontal divider header">
-                      <i class="leaf icon"></i>
-                      最新文章
-                    </h4>
-                    <div class="ui container">
-                        <ol class="ui list">
-                            @foreach($new as $n)
-                                <li value="-"><a href="{{url('a/'.$n->art_id)}}" title="{{$n->art_title}}" target="_blank">{{$n->art_title}}</a></li>
-                            @endforeach
-                        </ol>
-                    </div>
-                    <h4 class="ui horizontal divider header">
-                      <i class="leaf icon"></i>
-                      点击排行
-                    </h4>
-                    <div class="ui container">
-                        <ol class="ui list">
-                            @foreach($hot as $h)
-                                <li value="-"><a href="{{url('a/'.$h->art_id)}}" title="{{$h->art_title}}" target="_blank">{{$h->art_title}}</a></li>
-                            @endforeach
-                        </ol>
-                    </div>
-                    <h4 class="ui horizontal divider header">
-                      <i class="leaf icon"></i>
-                        友情链接
-                    </h4>
-                    <div class="ui container">
-                        <ol class="ui list">
-                            @foreach($links as $l)
-                                <li value="-"><a href="{{$l->link_url}}" target="_blank">{{$l->link_name}}</a></li>
-                            @endforeach
-                        </ol>
-                    </div>
+    <div class="ui grid main-container" >
+        <div class="three wide column left-content" >
+            <div class="ui grid container" style="margin-top:50px;">
+                <div class="profile">
+                    <img class="ui small circular image" src="{{asset('public/style/home/images/profile.jpg')}}">
+                    <h3 class="ui header profile-text">
+                        风清扬
+                    </h3>
                 </div>
             </div>
-            <div class="thirteen wide column right-content" >
-                @yield('content')
+            <div class="ui grid container" style="margin-top:150px;">
+                <h4 class="ui horizontal divider header">
+                  <i class="leaf icon"></i>
+                  最新文章
+                </h4>
+                <div class="ui container">
+                    <ol class="ui list">
+                        @foreach($new as $n)
+                            <li value="-"><a href="{{url('a/'.$n->art_id)}}" title="{{$n->art_title}}" target="_blank">{{$n->art_title}}</a></li>
+                        @endforeach
+                    </ol>
+                </div>
+                <h4 class="ui horizontal divider header">
+                  <i class="leaf icon"></i>
+                  点击排行
+                </h4>
+                <div class="ui container">
+                    <ol class="ui list">
+                        @foreach($hot as $h)
+                            <li value="-"><a href="{{url('a/'.$h->art_id)}}" title="{{$h->art_title}}" target="_blank">{{$h->art_title}}</a></li>
+                        @endforeach
+                    </ol>
+                </div>
+                <h4 class="ui horizontal divider header">
+                  <i class="leaf icon"></i>
+                    友情链接
+                </h4>
+                <div class="ui container">
+                    <ol class="ui list">
+                        @foreach($links as $l)
+                            <li value="-"><a href="{{$l->link_url}}" target="_blank">{{$l->link_name}}</a></li>
+                        @endforeach
+                    </ol>
+                </div>
             </div>
         </div>
-<div class="footer">
-    <p>{!! Config::get('web.copyright') !!} {!! Config::get('web.web_count') !!}</p>
-</div>
+        <div class="thirteen wide column right-content" >
+            @yield('content')
+        </div>
+    </div>
+    <div class="footer">
+        <p>{!! Config::get('web.copyright') !!} {!! Config::get('web.web_count') !!}</p>
+    </div>
 </body>
 </html>

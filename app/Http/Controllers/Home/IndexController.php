@@ -12,7 +12,7 @@ class IndexController extends CommonController
     {
         //点击量最高的6篇文章（站长推荐）
         $pics = Article::orderBy('art_view','desc')->take(6)->get();
-        
+
         //图文列表5篇（带分页）
         $data = Article::orderBy('art_time','desc')->paginate(5);
 
@@ -45,26 +45,25 @@ class IndexController extends CommonController
             foreach($cateIds as $v){
                 $arr[] = $v->cate_id;
             }
-            
+
             //图文列表4篇（带分页）
             $data = Article::whereIn('cate_id',$arr)->orderBy('art_time','desc')->paginate(4);
         }
         foreach($data as &$v){
             $v['cate_name'] = Category::find($v->cate_id)->cate_name;
         }
-//        dd($data);
         return view('home.list',compact('field','data','submenu'));
     }
 
     public function article($art_id)
     {
-        $field = Article::Join('category','article.cate_id','=','category.cate_id')->where('art_id',$art_id)->first();
+        $field = Article::Join('categories','articles.cate_id','=','categories.cate_id')->where('art_id',$art_id)->first();
 
         //如果有父级菜单,取得父级菜单数据
         if($field->cate_pid != 0 ){
-            $field['pid_data'] = Category::find($field->cate_pid);
+            $field['pid_data'] = Categories::find($field->cate_pid);
         };
-        
+
         //查看次数自增
         Article::where('art_id',$art_id)->increment('art_view');
 
