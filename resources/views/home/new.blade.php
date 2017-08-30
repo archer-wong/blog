@@ -100,7 +100,8 @@
                     <span>没有下一篇了<i class="pointing right icon"></i></span>
                 @endif
             </div>
-            <div styel="float:left">                @if($article['pre'])
+            <div styel="float:left">
+                @if($article['pre'])
                     <a href="{{url('a/'.$article['pre']->art_id)}}"><i class="pointing left icon"></i>{{$article['pre']->art_title}}</a>
                 @else
                     <span><i class="pointing right icon"></i>没有上一篇了</span>
@@ -117,70 +118,93 @@
             </ul>
         </div>
 
-<div class="ui comments">
-  <h3 class="ui dividing header">发表评论</h3>
-  <div class="comment">
-    <a class="avatar">
-      <img src="{{asset('public/style/home/images/user-head.png')}}">
-    </a>
-    <div class="content">
-      <a class="author">Matt</a>
-      <div class="metadata">
-        <span class="date">Today at 5:42PM</span>
-      </div>
-      <div class="text">
-        How artistic!
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-      </div>
-    </div>
-  </div>
-  <div class="comment">
-    <a class="avatar">
-      <img src="{{asset('public/style/home/images/user-head.png')}}">
-    </a>
-    <div class="content">
-      <a class="author">Elliot Fu</a>
-      <div class="metadata">
-        <span class="date">Yesterday at 12:30AM</span>
-      </div>
-      <div class="text">
-        <p>This has been very useful for my research. Thanks as well!</p>
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-      </div>
-    </div>
-    <div class="comments">
-      <div class="comment">
-        <a class="avatar">
-          <img src="{{asset('public/style/home/images/user-head.png')}}">
-        </a>
-        <div class="content">
-          <a class="author">Jenny Hess</a>
-          <div class="metadata">
-            <span class="date">Just now</span>
-          </div>
-          <div class="text">
-            Elliot you are always so right :)
-          </div>
-          <div class="actions">
-            <a class="reply">Reply</a>
-          </div>
+        <div class="ui comments">
+            <h3 class="ui dividing header">Comments</h3>
+                @foreach ($comments as $v)
+                <div class="comment">
+                    <a class="avatar">
+                        <img src="{{asset('public/style/home/images/user-head.png')}}">
+                    </a>
+                    <div class="content">
+                        <a class="author">{{ $v['user_name'] }}</a>
+                        <div class="metadata">
+                            <span class="date">{{ $v['created_at'] }}</span>
+                        </div>
+                        <div class="text">
+                            <p>{{ $v['content'] }}</p>
+                        </div>
+                        <div class="actions">
+                            <a class="reply reply-comment" data-comment-id="{{ $v['id'] }}">回复</a>
+                        </div>
+                    </div>
+                    @if (isset($v['reply']) && !empty($v['reply']))
+                    @foreach ($v['reply'] as $value)
+                        <div class="comments">
+                            <div class="comment">
+                                <a class="avatar">
+                                    <img src="{{asset('public/style/home/images/user-head.png')}}">
+                                </a>
+                                <div class="content">
+                                    <a class="author">{{ $value['user_name'] }}</a>
+                                    <div class="metadata">
+                                        <span class="date">{{ $value['created_at'] }}</span>
+                                    </div>
+                                    <div class="text">
+                                        <p>{{ $value['reply_content'] }}</p>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply reply-comment" data-comment-id="{{ $v['id'] }}">回复</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    @endif
+                </div>
+            @endforeach
+            @if (session('success_msg'))
+                <div class="ui green message">
+                    {{session('success_msg')}}
+                </div>
+            @endif
+            @if (session('failed_msg'))
+                <div class="ui red message">
+                    {{session('failed_msg')}}
+                </div>
+            @endif
+            <form class="ui reply form" action="{{ url('addComment') }}" id="comment_form" method="post">
+                {{csrf_field()}}
+                <input type="hidden" id="article_id" name="article_id" value="{{ $field->art_id }}" >
+                <input type="hidden" id="comment_id" name="comment_id" value="" >
+                <div class="field">
+                    <textarea name="content" id="content"></textarea>
+                </div>
+                <div class="ui blue labeled submit icon button" id="add_comment">
+                    <i class="icon edit"></i> 评论
+                </div>
+            </form>
         </div>
-      </div>
-    </div>
-  </div>
-  <form class="ui reply form">
-    <div class="field">
-      <textarea></textarea>
-    </div>
-    <div class="ui blue labeled submit icon button">
-      <i class="icon edit"></i> Add Reply
-    </div>
-  </form>
-</div>
     </div>
 </div>
+<script>
+    $('#add_comment').click(function(){
+        var user = '{{Auth::user()}}'
+        if (user) {
+            $('#comment_form').submit();
+        } else {
+            location.href = "{{ url('login') }}"
+        }
+    })
+    $('.reply-comment').click(function(){
+        $('#comment_id').val($(this).attr('data-comment-id'))
+        var user_name = $(this).parent().parent().children("a.author").html()
+        var html = '@' +user_name+ '  ：'
+        $('#content').val(html)
+    })
+    $('#content').keyup(function(){
+        if($('#content').val() ==''){
+            $('#comment_id').val('')
+        }
+    })
+</script>
 @endsection

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Home;
 
+use Illuminate\Http\Request;
 use App\Http\Model\Article;
 use App\Http\Model\Category;
 use App\Http\Model\Links;
+use App\Http\Model\Comment;
+use App\Http\Model\Reply;
+use App\Http\Model\User;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends CommonController
 {
@@ -58,6 +63,17 @@ class IndexController extends CommonController
     public function article($art_id)
     {
         $field = Article::Join('categories','articles.cate_id','=','categories.cate_id')->where('art_id',$art_id)->first();
+        $comments = Comment::where('article_id', $art_id)->get()->toArray();
+        foreach ($comments as $k => $v) {
+            $replies = Reply::where('comment_id', $v['id'])->get()->toArray();
+            foreach ($replies as $key => $value) {
+                $reply_user = User::find($value['user_id']);
+                $replies[$key]['user_name'] = $reply_user['name'];
+            }
+            $user_info = User::find($v['user_id']);
+            $comments[$k]['reply'] = $replies;
+            $comments[$k]['user_name'] = $user_info['name'];
+        }
 
         //如果有父级菜单,取得父级菜单数据
         if($field->cate_pid != 0 ){
@@ -74,6 +90,34 @@ class IndexController extends CommonController
         //相关文章,本分类下的文章
         $data = Article::where('cate_id',$field->cate_id)->orderBy('art_id','desc')->take(6)->get();
 
-        return view('home.new',compact('field','article','data'));
+        return view('home.new',compact('field','article','data', 'comments'));
     }
+
+    public function addComment(Request $request)
+    {
+        $user_info = Auth::user();
+        $article_id = $request->input('article_id');
+        $comment_id = $request->input('comment_id');
+        $content = $request->input('content');
+        $user_id = $user_info['id'];
+
+        if ($request->has('comment_id')) {
+            $reply = new Reply;
+            $reply->comment_id = $comment_id;
+            $reply->reply_content = $content;
+            $reply->user_id = $user_id;
+            $result = $reply->save();
+        } else {
+            $comment = new Comment;
+            $comment->article_id = $article_id;
+            $comment->content = $content;
+            $comment->user_id = $user_id;
+            $result = $comment->save();
+        }
+        if ($result) {
+            return redirect('a/'.$article_id)->with('success_msg', "添加评论成功！");
+        }
+        return redirect('a/'.$article_id)->with('failed_msg', "添加评论失败！");
+    }
+
 }
