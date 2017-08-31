@@ -7,7 +7,7 @@ trait InteractsWithAuthentication
     /**
      * Assert that the user is authenticated.
      *
-     * @param string|null  $guard
+     * @param  string|null  $guard
      * @return $this
      */
     public function seeIsAuthenticated($guard = null)
@@ -50,9 +50,16 @@ trait InteractsWithAuthentication
      */
     public function seeIsAuthenticatedAs($user, $guard = null)
     {
+        $expected = $this->app->make('auth')->guard($guard)->user();
+
+        $this->assertInstanceOf(
+            get_class($expected), $user,
+            'The currently authenticated user is not who was expected'
+        );
+
         $this->assertSame(
-            $this->app->make('auth')->guard($guard)->user(), $user,
-            'The logged in user is not the same'
+            $expected->getAuthIdentifier(), $user->getAuthIdentifier(),
+            'The currently authenticated user is not who was expected'
         );
 
         return $this;
@@ -93,7 +100,7 @@ trait InteractsWithAuthentication
     /**
      * Return true is the credentials are valid, false otherwise.
      *
-     * @param  array $credentials
+     * @param  array  $credentials
      * @param  string|null  $guard
      * @return bool
      */

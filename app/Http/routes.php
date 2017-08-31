@@ -49,7 +49,8 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
 
 });
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+    Auth::routes();
+    Route::get('/logout', 'Auth\LoginController@logout');
 });
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('addComment', 'Home\IndexController@addComment');

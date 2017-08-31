@@ -98,6 +98,8 @@ class Builder
      */
     public function getColumnType($table, $column)
     {
+        $table = $this->connection->getTablePrefix().$table;
+
         return $this->connection->getDoctrineColumn($table, $column)->getType()->getName();
     }
 
@@ -121,7 +123,7 @@ class Builder
      *
      * @param  string    $table
      * @param  \Closure  $callback
-     * @return \Illuminate\Database\Schema\Blueprint
+     * @return void
      */
     public function table($table, Closure $callback)
     {
@@ -133,7 +135,7 @@ class Builder
      *
      * @param  string    $table
      * @param  \Closure  $callback
-     * @return \Illuminate\Database\Schema\Blueprint
+     * @return void
      */
     public function create($table, Closure $callback)
     {
@@ -150,7 +152,7 @@ class Builder
      * Drop a table from the schema.
      *
      * @param  string  $table
-     * @return \Illuminate\Database\Schema\Blueprint
+     * @return void
      */
     public function drop($table)
     {
@@ -165,7 +167,7 @@ class Builder
      * Drop a table from the schema if it exists.
      *
      * @param  string  $table
-     * @return \Illuminate\Database\Schema\Blueprint
+     * @return void
      */
     public function dropIfExists($table)
     {
@@ -181,7 +183,7 @@ class Builder
      *
      * @param  string  $from
      * @param  string  $to
-     * @return \Illuminate\Database\Schema\Blueprint
+     * @return void
      */
     public function rename($from, $to)
     {
@@ -190,6 +192,30 @@ class Builder
         $blueprint->rename($to);
 
         $this->build($blueprint);
+    }
+
+    /**
+     * Enable foreign key constraints.
+     *
+     * @return bool
+     */
+    public function enableForeignKeyConstraints()
+    {
+        return $this->connection->statement(
+            $this->grammar->compileEnableForeignKeyConstraints()
+        );
+    }
+
+    /**
+     * Disable foreign key constraints.
+     *
+     * @return bool
+     */
+    public function disableForeignKeyConstraints()
+    {
+        return $this->connection->statement(
+            $this->grammar->compileDisableForeignKeyConstraints()
+        );
     }
 
     /**

@@ -9,8 +9,8 @@ use BadMethodCallException;
 use Illuminate\Support\Str;
 use Illuminate\Support\MessageBag;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\View\Engines\EngineInterface;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\View\Engines\EngineInterface;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\View\View as ViewContract;
 
@@ -76,6 +76,8 @@ class View implements ArrayAccess, ViewContract
      *
      * @param  callable|null  $callback
      * @return string
+     *
+     * @throws \Throwable
      */
     public function render(callable $callback = null)
     {

@@ -9,7 +9,9 @@ trait ConfirmableTrait
     /**
      * Confirm before proceeding with the action.
      *
-     * @param  string    $warning
+     * This method only asks for confirmation in production.
+     *
+     * @param  string  $warning
      * @param  \Closure|bool|null  $callback
      * @return bool
      */
@@ -29,7 +31,7 @@ trait ConfirmableTrait
             $this->comment(str_repeat('*', strlen($warning) + 12));
             $this->output->writeln('');
 
-            $confirmed = $this->confirm('Do you really wish to run this command? [y/N]');
+            $confirmed = $this->confirm('Do you really wish to run this command?');
 
             if (! $confirmed) {
                 $this->comment('Command Cancelled!');
