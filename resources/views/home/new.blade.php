@@ -88,10 +88,11 @@
         <div class="art-content">
             {!! $field->art_content !!}
         </div>
+        <div class="ui divider"></div>
         <div class="keybq">
             <p><span>关键字词</span>：{{$field->art_tag}}</p>
         </div>
-        <div class="ui divider"></div>
+        <br>
         <div>
             <div style="float:right">
                 @if($article['next'])
@@ -104,11 +105,12 @@
                 @if($article['pre'])
                     <a href="{{url('a/'.$article['pre']->art_id)}}"><i class="pointing left icon"></i>{{$article['pre']->art_title}}</a>
                 @else
-                    <span><i class="pointing right icon"></i>没有上一篇了</span>
+                    <span><i class="pointing left icon"></i>没有上一篇了</span>
                 @endif
             </div>
         </div>
         <div class="ui divider"></div>
+<!--隐去
         <div>
             <h3 class="ui header"></i>相关文章</h3>
             <ul>
@@ -117,9 +119,9 @@
                 @endforeach
             </ul>
         </div>
-
-        <div class="ui comments">
-            <h3 class="ui dividing header">Comments</h3>
+-->
+        <div class="ui comments" style="max-width:65%;">
+            <h3 class="ui dividing header">评论</h3>
                 @foreach ($comments as $v)
                 <div class="comment">
                     <a class="avatar">
@@ -138,27 +140,27 @@
                         </div>
                     </div>
                     @if (isset($v['reply']) && !empty($v['reply']))
-                    @foreach ($v['reply'] as $value)
-                        <div class="comments">
-                            <div class="comment">
-                                <a class="avatar">
-                                    <img src="{{asset('public/style/home/images/user-head.png')}}">
-                                </a>
-                                <div class="content">
-                                    <a class="author">{{ $value['user_name'] }}</a>
-                                    <div class="metadata">
-                                        <span class="date">{{ $value['created_at'] }}</span>
-                                    </div>
-                                    <div class="text">
-                                        <p>{{ $value['reply_content'] }}</p>
-                                    </div>
-                                    <div class="actions">
-                                        <a class="reply reply-comment" data-comment-id="{{ $v['id'] }}">回复</a>
+                        @foreach ($v['reply'] as $value)
+                            <div class="comments">
+                                <div class="comment">
+                                    <a class="avatar">
+                                        <img src="{{asset('public/style/home/images/user-head.png')}}">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author">{{ $value['user_name'] }}</a>
+                                        <div class="metadata">
+                                            <span class="date">{{ $value['created_at'] }}</span>
+                                        </div>
+                                        <div class="text">
+                                            <p>{{ $value['reply_content'] }}</p>
+                                        </div>
+                                        <div class="actions">
+                                            <a class="reply reply-comment" data-comment-id="{{ $v['id'] }}">回复</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                     @endif
                 </div>
             @endforeach
