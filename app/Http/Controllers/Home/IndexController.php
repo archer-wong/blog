@@ -101,7 +101,7 @@ class IndexController extends CommonController
         $content = $request->input('content');
         $user_id = $user_info['id'];
 
-        if ($request->has('comment_id')) {
+        if ($request->input('comment_id') != '') {
             $reply = new Reply;
             $reply->comment_id = $comment_id;
             $reply->reply_content = $content;

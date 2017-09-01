@@ -788,6 +788,6 @@ class MimeType
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
-        return collect(self::$mimes)->get($extension, 'application/octet-stream');
+        return self::$mimes[$extension] ?? 'application/octet-stream';
     }
 }
